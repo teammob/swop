@@ -9,7 +9,7 @@ import {I18nManager} from 'react-native';
 import RNRestart from 'react-native-restart';
 
 const siteConfig = {
-  timezone_string: 'Asia/Karachi',
+  timezone_string: 'Europe/London',
   date_format: 'F j, Y',
   time_format: 'g:i a',
 };

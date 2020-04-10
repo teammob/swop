@@ -1,21 +1,24 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { connect } from 'react-redux';
-import { fromJS } from 'immutable';
+import {ScrollView, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
+import {fromJS} from 'immutable';
 import fetch from 'src/utils/request';
 import debounce from 'lodash/debounce';
 
-import { SearchBar, ThemedView } from 'src/components';
+import {SearchBar, ThemedView} from 'src/components';
 import SearchRecentItem from './containers/SearchRecentItem';
 import SearchProductItem from './containers/SearchProductItem';
 
-import { currencySelector, defaultCurrencySelector } from 'src/modules/common/selectors';
-import { filterBySelector } from 'src/modules/product/selectors';
-import { mainStack } from 'src/config/navigator';
-import { filterByProduct, addKeyword } from 'src/modules/product/actions';
-import { prepareProductItem } from 'src/utils/product';
+import {
+  currencySelector,
+  defaultCurrencySelector,
+} from 'src/modules/common/selectors';
+import {filterBySelector} from 'src/modules/product/selectors';
+import {mainStack} from 'src/config/navigator';
+import {filterByProduct, addKeyword} from 'src/modules/product/actions';
+import {prepareProductItem} from 'src/utils/product';
 
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 class SearchScreen extends React.Component {
   static navigationOptions = {
@@ -30,14 +33,14 @@ class SearchScreen extends React.Component {
     };
   }
 
-  updateSearch = value => {
-    const { filterBy, dispatch } = this.props;
+  updateSearch = (value) => {
+    const {filterBy, dispatch} = this.props;
     const newFilter = filterBy.set('search', value);
     dispatch(filterByProduct(newFilter));
   };
 
   search = debounce(() => {
-    const { filterBy } = this.props;
+    const {filterBy} = this.props;
     const search = filterBy.get('search');
 
     if (search.length > 1) {
@@ -47,7 +50,7 @@ class SearchScreen extends React.Component {
 
       fetch
         .get(`wc/v3/products?search=${search}`)
-        .then(data => {
+        .then((data) => {
           this.setState({
             data,
             loading: false,
@@ -63,31 +66,41 @@ class SearchScreen extends React.Component {
   }, 200);
 
   searchSubmit = () => {
-    const { filterBy, navigation, dispatch } = this.props;
+    const {filterBy, navigation, dispatch} = this.props;
     dispatch(addKeyword(filterBy.get('search')));
-    navigation.navigate(mainStack.products, { name: filterBy.get('search'), filterBy });
+    navigation.navigate(mainStack.products, {
+      name: filterBy.get('search'),
+      filterBy,
+    });
   };
 
-  handleRecentKeyword = search => {
-    const { filterBy, navigation } = this.props;
+  handleRecentKeyword = (search) => {
+    const {filterBy, navigation} = this.props;
     const newFilterBy = filterBy.set('search', search);
-    navigation.navigate(mainStack.products, { name: search, filterBy: newFilterBy });
+    navigation.navigate(mainStack.products, {
+      name: search,
+      filterBy: newFilterBy,
+    });
   };
 
-  handleProductPage = product => {
-    const { navigation, currency, defaultCurrency } = this.props;
+  handleProductPage = (product) => {
+    const {navigation, currency, defaultCurrency} = this.props;
     navigation.navigate(mainStack.product, {
       // no need get days in prepareProductItem
-      product: prepareProductItem(fromJS(product), currency, defaultCurrency).toJS(),
+      product: prepareProductItem(
+        fromJS(product),
+        currency,
+        defaultCurrency,
+      ).toJS(),
     });
   };
 
   render() {
-    const { loading } = this.state;
+    const {loading} = this.state;
     const {
       filterBy,
       navigation,
-      screenProps: { t },
+      screenProps: {t},
     } = this.props;
 
     return (
@@ -106,7 +119,10 @@ class SearchScreen extends React.Component {
         />
         <ScrollView>
           <SearchRecentItem handleRecentKeyword={this.handleRecentKeyword} />
-          <SearchProductItem data={this.state.data} handleProductPage={this.handleProductPage} />
+          <SearchProductItem
+            data={this.state.data}
+            handleProductPage={this.handleProductPage}
+          />
         </ScrollView>
       </ThemedView>
     );
@@ -119,7 +135,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     filterBy: filterBySelector(state),
     currency: currencySelector(state),

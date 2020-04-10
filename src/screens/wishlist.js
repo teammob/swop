@@ -1,22 +1,25 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-import { StyleSheet, View, ActivityIndicator, I18nManager } from 'react-native';
-import { Header, ThemedView } from 'src/components';
-import { SwipeListView } from 'react-native-swipe-list-view';
+import {StyleSheet, View, ActivityIndicator, I18nManager} from 'react-native';
+import {Header, ThemedView} from 'src/components';
+import {SwipeListView} from 'react-native-swipe-list-view';
 import ProductItem from 'src/containers/ProductItem';
 import ButtonSwiper from 'src/containers/ButtonSwiper';
-import { TextHeader, CartIcon } from 'src/containers/HeaderComponent';
+import {TextHeader, CartIcon} from 'src/containers/HeaderComponent';
 import Empty from 'src/containers/Empty';
 
-import { removeWishList } from 'src/modules/common/actions';
-import { fetchWishList } from 'src/modules/product/actions';
-import { loadingWishListSelector, dataWishListSelector } from 'src/modules/product/selectors';
+import {removeWishList} from 'src/modules/common/actions';
+import {fetchWishList} from 'src/modules/product/actions';
+import {
+  loadingWishListSelector,
+  dataWishListSelector,
+} from 'src/modules/product/selectors';
 
-import { wishListSelector } from 'src/modules/common/selectors';
+import {wishListSelector} from 'src/modules/common/selectors';
 
-import { margin } from 'src/components/config/spacing';
-import { homeTabs } from 'src/config/navigator';
+import {margin} from 'src/components/config/spacing';
+import {homeTabs} from 'src/config/navigator';
 
 class WishListScreen extends React.Component {
   componentDidMount() {
@@ -24,25 +27,25 @@ class WishListScreen extends React.Component {
   }
 
   fetchData = (data = this.props.wishList) => {
-    const { dispatch } = this.props;
+    const {dispatch} = this.props;
     dispatch(fetchWishList(data.toJS()));
   };
 
-  removeItem = product_id => {
-    const { dispatch } = this.props;
+  removeItem = (product_id) => {
+    const {dispatch} = this.props;
     dispatch(removeWishList(product_id));
   };
 
   componentDidUpdate(prevProps) {
-    const { wishList } = this.props;
+    const {wishList} = this.props;
     if (!wishList.equals(prevProps.wishList)) {
       this.fetchData(this.props.wishList);
     }
   }
-  renderData = data => {
+  renderData = (data) => {
     const {
-      screenProps: { t },
-      navigation
+      screenProps: {t},
+      navigation,
     } = this.props;
     if (!data || data.size < 1) {
       return (
@@ -58,12 +61,16 @@ class WishListScreen extends React.Component {
     return (
       <SwipeListView
         useFlatList
-        keyExtractor={item => `${item.id}`}
+        keyExtractor={(item) => `${item.id}`}
         data={data.toJS()}
-        renderItem={({ item, index }) => (
-          <ProductItem item={item} style={index === 0 ? styles.firstItem : undefined} type='wishlist' />
+        renderItem={({item, index}) => (
+          <ProductItem
+            item={item}
+            style={index === 0 ? styles.firstItem : undefined}
+            type="wishlist"
+          />
         )}
-        renderHiddenItem={({ item }) => (
+        renderHiddenItem={({item}) => (
           <View style={styles.viewSwiper}>
             <ButtonSwiper onPress={() => this.removeItem(item.id)} />
           </View>
@@ -81,10 +88,13 @@ class WishListScreen extends React.Component {
       wishList,
       data,
       loading,
-      screenProps: { t },
+      screenProps: {t},
     } = this.props;
 
-    const subtitle = wishList.size > 1 ? t('common:text_items', { count: wishList.size }) : t('common:text_item', { count: wishList.size });
+    const subtitle =
+      wishList.size > 1
+        ? t('common:text_items', {count: wishList.size})
+        : t('common:text_item', {count: wishList.size});
 
     return (
       <ThemedView style={styles.container}>
@@ -124,7 +134,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   data: dataWishListSelector(state),
   loading: loadingWishListSelector(state),
   wishList: wishListSelector(state),

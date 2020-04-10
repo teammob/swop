@@ -12,8 +12,8 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 
-import { withTheme, ViewPropTypes } from '../config';
-import { renderNode, nodeType } from '../helpers';
+import {withTheme, ViewPropTypes} from '../config';
+import {renderNode, nodeType} from '../helpers';
 
 import Icon from '../icons/Icon';
 import Image from '../image/Image';
@@ -55,7 +55,8 @@ const Avatar = ({
   ImageComponent,
   ...attributes
 }) => {
-  const width = typeof size === 'number' ? size : avatarSizes[size] || avatarSizes.small;
+  const width =
+    typeof size === 'number' ? size : avatarSizes[size] || avatarSizes.small;
   const height = width;
   const titleSize = width / 2;
   const iconSize = width / 2;
@@ -78,8 +79,7 @@ const Avatar = ({
         editButton.style,
       ])}
       underlayColor={editButton.underlayColor}
-      onPress={onEditPress}
-    >
+      onPress={onEditPress}>
       <View>
         <Icon size={editButtonSize * 0.8} {...editButton} />
       </View>
@@ -87,8 +87,18 @@ const Avatar = ({
   );
 
   const PlaceholderContent =
-    (renderPlaceholderContent && renderNode(undefined, renderPlaceholderContent)) ||
-    (title && <Text style={StyleSheet.flatten([styles.title, { fontSize: titleSize }, titleStyle])}>{title}</Text>) ||
+    (renderPlaceholderContent &&
+      renderNode(undefined, renderPlaceholderContent)) ||
+    (title && (
+      <Text
+        style={StyleSheet.flatten([
+          styles.title,
+          {fontSize: titleSize},
+          titleStyle,
+        ])}>
+        {title}
+      </Text>
+    )) ||
     (icon && (
       <Icon
         {...icon}
@@ -109,23 +119,29 @@ const Avatar = ({
       onLongPress={onLongPress}
       style={StyleSheet.flatten([
         styles.container,
-        { height, width },
-        rounded && { borderRadius: width / 2 },
+        {height, width},
+        rounded && {borderRadius: width / 2},
         containerStyle,
       ])}
-      {...attributes}
-    >
+      {...attributes}>
       <Image
-        placeholderStyle={StyleSheet.flatten([placeholderStyle, hidePlaceholder && { backgroundColor: 'transparent' }])}
+        placeholderStyle={StyleSheet.flatten([
+          placeholderStyle,
+          hidePlaceholder && {backgroundColor: 'transparent'},
+        ])}
         PlaceholderContent={PlaceholderContent}
         containerStyle={StyleSheet.flatten([
           styles.overlayContainer,
           overlayContainerStyle,
-          rounded && { borderRadius: width / 2, overflow: 'hidden' },
+          rounded && {borderRadius: width / 2, overflow: 'hidden'},
         ])}
         source={source}
         {...imageProps}
-        style={StyleSheet.flatten([styles.avatar, imageProps && imageProps.style, avatarStyle])}
+        style={StyleSheet.flatten([
+          styles.avatar,
+          imageProps && imageProps.style,
+          avatarStyle,
+        ])}
         ImageComponent={ImageComponent}
       />
       {Utils}
@@ -164,7 +180,7 @@ const styles = StyleSheet.create({
       },
       default: {
         shadowColor: '#000',
-        shadowOffset: { width: 1, height: 1 },
+        shadowOffset: {width: 1, height: 1},
         shadowRadius: 2,
         shadowOpacity: 0.5,
       },
@@ -192,7 +208,10 @@ Avatar.propTypes = {
   activeOpacity: PropTypes.number,
   icon: PropTypes.object,
   iconStyle: Text.propTypes.style,
-  size: PropTypes.oneOfType([PropTypes.oneOf(['small', 'medium', 'large', 'xlarge']), PropTypes.number]),
+  size: PropTypes.oneOfType([
+    PropTypes.oneOf(['small', 'medium', 'large', 'xlarge']),
+    PropTypes.number,
+  ]),
   showEditButton: PropTypes.bool,
   onEditPress: PropTypes.func,
   editButton: PropTypes.shape({
@@ -217,5 +236,5 @@ Avatar.defaultProps = {
   ImageComponent: RNImage,
 };
 
-export { Avatar };
+export {Avatar};
 export default withTheme(Avatar, 'Avatar');

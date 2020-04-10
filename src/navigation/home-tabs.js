@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 
 import Home from 'src/screens/home';
 import Category from 'src/screens/shop/category';
@@ -8,10 +8,10 @@ import WishList from 'src/screens/wishlist';
 
 import ProfileStack from './profile-stack';
 import CartStack from './cart-stack';
-
+import productSwiperScreen from '../screens/home/containers/Products/productSwiper';
 import Tabbar from 'src/containers/Tabbar';
 
-import { homeTabs } from 'src/config/navigator';
+import {homeTabs} from 'src/config/navigator';
 
 const Tabs = createBottomTabNavigator(
   {
@@ -24,14 +24,21 @@ const Tabs = createBottomTabNavigator(
     [homeTabs.wish_list]: {
       screen: WishList,
     },
+    /*
     [homeTabs.cart]: {
       screen: CartStack,
-      navigationOptions: ({ navigation }) => {
-        const {state: {index}} = navigation
+      navigationOptions: ({navigation}) => {
+        const {
+          state: {index},
+        } = navigation;
         return {
           tabBarVisible: index === 0,
-        }
+        };
       },
+    },
+    */
+    [homeTabs.itemSwipe]: {
+      screen: productSwiperScreen,
     },
     [homeTabs.me]: {
       screen: ProfileStack,
@@ -41,8 +48,8 @@ const Tabs = createBottomTabNavigator(
     defaultNavigationOptions: {
       // tabBarVisible: false
     },
-    tabBarComponent: props => <Tabbar {...props}/>,
-  }
+    tabBarComponent: props => <Tabbar {...props} />,
+  },
 );
 
 export default Tabs;

@@ -10,34 +10,37 @@ import {selectCartList} from 'src/modules/cart/selectors';
 
 class IconTabbar extends React.Component {
   render() {
-    const { nameData, cart, wishList, ...rest } = this.props;
+    const {nameData, cart, wishList, ...rest} = this.props;
 
-    const isDot = nameData === 'cart' ? cart.size : nameData === 'wishList' ? wishList.size : 0 ;
+    const isDot =
+      nameData === 'cart'
+        ? cart.size
+        : nameData === 'wishList'
+        ? wishList.size
+        : 0;
 
     return (
       <View>
-        <Icon
-          name='home'
-          size={22}
-          {...rest}
-        />
-        {isDot ? <Dot
-          size={9}
-          color={red}
-          style={{
-            position: 'absolute',
-            right: -1,
-            bottom: 0
-          }}
-        />: null}
+        <Icon name="home" size={22} {...rest} />
+        {isDot ? (
+          <Dot
+            size={9}
+            color={red}
+            style={{
+              position: 'absolute',
+              right: -1,
+              bottom: 0,
+            }}
+          />
+        ) : null}
       </View>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   wishList: wishListSelector(state),
   cart: selectCartList(state),
 });
 
-export default connect(mapStateToProps, null)(IconTabbar)
+export default connect(mapStateToProps, null)(IconTabbar);

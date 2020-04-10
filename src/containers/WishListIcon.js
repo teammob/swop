@@ -1,21 +1,31 @@
 import React from 'react';
 
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-import { Icon } from 'src/components';
-import { grey4, black } from 'src/components/config/colors';
+import {Icon} from 'src/components';
+import {grey4, black} from 'src/components/config/colors';
 
-import { addWishList, removeWishList } from 'src/modules/common/actions';
-import { configsSelector } from 'src/modules/common/selectors';
-import { wishListSelector } from 'src/modules/common/selectors';
+import {addWishList, removeWishList} from 'src/modules/common/actions';
+import {configsSelector} from 'src/modules/common/selectors';
+import {wishListSelector} from 'src/modules/common/selectors';
 
 export function WishListIcon(props) {
-  const { product_id, wishList, dispatch, color, colorSelect, configs, ...rest } = props;
+  const {
+    product_id,
+    wishList,
+    dispatch,
+    color,
+    colorSelect,
+    configs,
+    ...rest
+  } = props;
   if (!configs.get('toggleWishlist')) {
     return null;
   }
   const hasList = wishList.has(product_id);
-  const wishListAction = hasList ? () => dispatch(removeWishList(product_id)) : () => dispatch(addWishList(product_id));
+  const wishListAction = hasList
+    ? () => dispatch(removeWishList(product_id))
+    : () => dispatch(addWishList(product_id));
 
   return (
     <Icon

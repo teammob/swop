@@ -16,7 +16,7 @@ export const homeTabs = {
   home: 'HomeScreen',
   shop: 'ShopStack',
   wish_list: 'WishListStack',
-  cart: 'CartStack',
+  itemSwipe: 'productSwiperScreen',
   me: 'ProfileStack',
 };
 

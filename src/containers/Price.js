@@ -1,17 +1,17 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
-import { Text, Badge } from 'src/components';
+import {Text, Badge} from 'src/components';
 
-import { red, yellow } from 'src/components/config/colors';
-import fonts, { lineHeights, sizes } from 'src/components/config/fonts';
-import { margin } from 'src/components/config/spacing';
+import {red, yellow} from 'src/components/config/colors';
+import fonts, {lineHeights, sizes} from 'src/components/config/fonts';
+import {margin} from 'src/components/config/spacing';
 
 export function Price(props) {
-  const { price_format, h4, type, isPercentSale, style } = props;
-  const { t } = useTranslation();
+  const {price_format, h4, type, isPercentSale, style} = props;
+  const {t} = useTranslation();
 
   const h = h4 ? 'h4' : 'h5';
   const hSmall = h4 ? 'h5' : 'h6';
@@ -29,7 +29,7 @@ export function Price(props) {
 
   if (!price_format.regular_price && !price_format.sale_price) {
     return (
-      <Text medium style={[{ color: yellow }, styleText, style && style]}>
+      <Text medium style={[{color: yellow}, styleText, style && style]}>
         Updating cost...
       </Text>
     );
@@ -58,7 +58,9 @@ export function Price(props) {
         {isPercentSale && (
           <Badge
             status="error"
-            value={t('common:text_sale_percent', {percent: price_format.percent_sale})}
+            value={t('common:text_sale_percent', {
+              percent: price_format.percent_sale,
+            })}
             containerStyle={styles.viewBadge}
             badgeStyle={styles.badge}
             textStyle={styles.textBadge}

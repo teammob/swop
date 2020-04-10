@@ -15,15 +15,10 @@ import CartItem from './containers/CartItem';
 import CartTotal from './containers/CartTotal';
 import Coupon from './containers/Coupon';
 
-import {
-  mainStack,
-  homeTabs,
-  cartStack,
-  authStack,
-} from 'src/config/navigator';
-import { margin } from 'src/components/config/spacing';
-import { selectCartList, cartSizeSelector } from 'src/modules/cart/selectors';
-import { removeCart, changeQuantity } from 'src/modules/cart/actions';
+import {mainStack, homeTabs, cartStack, authStack} from 'src/config/navigator';
+import {margin} from 'src/components/config/spacing';
+import {selectCartList, cartSizeSelector} from 'src/modules/cart/selectors';
+import {removeCart, changeQuantity} from 'src/modules/cart/actions';
 import {
   wishListSelector,
   currencySelector,
@@ -31,9 +26,9 @@ import {
   configsSelector,
   getSiteConfig,
 } from 'src/modules/common/selectors';
-import { addWishList, removeWishList } from 'src/modules/common/actions';
-import { checkQuantity } from 'src/utils/product';
-import { isLoginSelector } from '../../modules/auth/selectors';
+import {addWishList, removeWishList} from 'src/modules/common/actions';
+import {checkQuantity} from 'src/utils/product';
+import {isLoginSelector} from '../../modules/auth/selectors';
 
 class CartScreen extends React.Component {
   goToProduct = product => {
@@ -55,21 +50,23 @@ class CartScreen extends React.Component {
       }
     } else {
       showMessage({
-        message: 'Can\'t change quantity',
+        message: "Can't change quantity",
         description: 'The quantity out of stock on store.',
         type: 'danger',
       });
     }
   };
 
-  getHandleWishList = (product_id) => {
-    const { wishList, dispatch } = this.props;
+  getHandleWishList = product_id => {
+    const {wishList, dispatch} = this.props;
     const hasList = wishList.has(product_id);
-    const wishListAction = hasList ? () => dispatch(removeWishList(product_id)) : () => dispatch(addWishList(product_id));
+    const wishListAction = hasList
+      ? () => dispatch(removeWishList(product_id))
+      : () => dispatch(addWishList(product_id));
     return {
       type: hasList ? 'like' : 'unlike',
-      onPress: wishListAction
-    }
+      onPress: wishListAction,
+    };
   };
 
   renderData = () => {
@@ -82,7 +79,7 @@ class CartScreen extends React.Component {
       defaultCurrency,
       configs,
       siteConfig,
-      isLogin
+      isLogin,
     } = this.props;
     if (line_items.size < 1) {
       return (
@@ -98,11 +95,15 @@ class CartScreen extends React.Component {
     const webviewCheckout = configs.get('webviewCheckout', true);
     return (
       <>
-        <CartTotal style={styles.viewTotal}/>
+        <CartTotal style={styles.viewTotal} />
         <SwipeListView
           useFlatList
           removeClippedSubviews={false}
-          keyExtractor={(item, index) => `${item.product_id}-${item.variation ? item.variation.id : ''}-${index}`}
+          keyExtractor={(item, index) =>
+            `${item.product_id}-${
+              item.variation ? item.variation.id : ''
+            }-${index}`
+          }
           data={line_items.toJS()}
           renderItem={({item, index}) => (
             <CartItem
@@ -117,7 +118,9 @@ class CartScreen extends React.Component {
           )}
           renderHiddenItem={({item}) => (
             <View style={styles.viewButton}>
-              {configs.get('toggleWishlist') && <ButtonSwiper {...this.getHandleWishList(item.product.id)} />}
+              {configs.get('toggleWishlist') && (
+                <ButtonSwiper {...this.getHandleWishList(item.product.id)} />
+              )}
               <ButtonSwiper onPress={() => dispatch(removeCart(item))} />
             </View>
           )}
@@ -125,19 +128,33 @@ class CartScreen extends React.Component {
           rightOpenValue={-widthButton}
           disableLeftSwipe={I18nManager.isRTL}
           disableRightSwipe={!I18nManager.isRTL}
-          ListFooterComponent={!webviewCheckout ? <Container>
-            <Coupon/>
-          </Container> : null}
+          ListFooterComponent={
+            !webviewCheckout ? (
+              <Container>
+                <Coupon />
+              </Container>
+            ) : null
+          }
         />
         <Container style={styles.footerScrollview}>
-          <Button title={t('cart:text_go_checkout')} onPress={() => {
-            console.log(siteConfig.get('enable_guest_checkout'), isLogin);
-            if (siteConfig.get('enable_guest_checkout') === 'no' && !isLogin) {
-              navigation.navigate(authStack.login);
-            } else {
-              navigation.navigate(webviewCheckout ? cartStack.webview_checkout : mainStack.checkout)
-            }
-          }}/>
+          <Button
+            title={t('cart:text_go_checkout')}
+            onPress={() => {
+              console.log(siteConfig.get('enable_guest_checkout'), isLogin);
+              if (
+                siteConfig.get('enable_guest_checkout') === 'no' &&
+                !isLogin
+              ) {
+                navigation.navigate(authStack.login);
+              } else {
+                navigation.navigate(
+                  webviewCheckout
+                    ? cartStack.webview_checkout
+                    : mainStack.checkout,
+                );
+              }
+            }}
+          />
         </Container>
       </>
     );
@@ -149,11 +166,21 @@ class CartScreen extends React.Component {
       size,
     } = this.props;
 
-    const subtitleHeader = size > 1 ? t('common:text_items', {count: size}) : t('common:text_item', {count: size});
+    const subtitleHeader =
+      size > 1
+        ? t('common:text_items', {count: size})
+        : t('common:text_item', {count: size});
 
     return (
       <ThemedView isFullView>
-        <Header centerComponent={<TextHeader title={t('common:text_cart')} subtitle={subtitleHeader}/>}/>
+        <Header
+          centerComponent={
+            <TextHeader
+              title={t('common:text_cart')}
+              subtitle={subtitleHeader}
+            />
+          }
+        />
         {this.renderData()}
       </ThemedView>
     );
@@ -178,8 +205,7 @@ const styles = {
   },
 };
 
-CartScreen.defaultProps = {
-};
+CartScreen.defaultProps = {};
 
 const mapStateToProps = state => {
   return {

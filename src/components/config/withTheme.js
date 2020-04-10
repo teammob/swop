@@ -2,23 +2,24 @@ import React from 'react';
 import deepmerge from 'deepmerge';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 
-import { ThemeConsumer } from './ThemeProvider';
+import {ThemeConsumer} from './ThemeProvider';
 import DefaultTheme from './colors';
 
-const isClassComponent = Component => Boolean(Component.prototype && Component.prototype.isReactComponent);
+const isClassComponent = Component =>
+  Boolean(Component.prototype && Component.prototype.isReactComponent);
 
 const withTheme = (WrappedComponent, themeKey) => {
   class ThemedComponent extends React.Component {
     render() {
       /* eslint-disable react/prop-types */
-      const { forwardedRef, children, ...rest } = this.props;
+      const {forwardedRef, children, ...rest} = this.props;
 
       return (
         <ThemeConsumer>
           {context => {
             // If user isn't using ThemeProvider
             if (!context) {
-              const props = { ...rest, theme: DefaultTheme, children };
+              const props = {...rest, theme: DefaultTheme, children};
 
               return isClassComponent(WrappedComponent) ? (
                 <WrappedComponent ref={forwardedRef} {...props} />
@@ -27,7 +28,7 @@ const withTheme = (WrappedComponent, themeKey) => {
               );
             }
 
-            const { theme, updateTheme } = context;
+            const {theme, updateTheme} = context;
             const props = {
               theme,
               updateTheme,
@@ -47,10 +48,14 @@ const withTheme = (WrappedComponent, themeKey) => {
 
   const name = themeKey
     ? `Themed.${themeKey}`
-    : `Themed.${WrappedComponent.displayName || WrappedComponent.name || 'Component'}`;
+    : `Themed.${WrappedComponent.displayName ||
+        WrappedComponent.name ||
+        'Component'}`;
 
   if (isClassComponent(WrappedComponent)) {
-    const forwardRef = (props, ref) => <ThemedComponent {...props} forwardedRef={ref} />;
+    const forwardRef = (props, ref) => (
+      <ThemedComponent {...props} forwardedRef={ref} />
+    );
 
     forwardRef.displayName = name;
     return hoistNonReactStatics(React.forwardRef(forwardRef), WrappedComponent);

@@ -9,7 +9,7 @@ type Props = {
   type: 'default' | 'wishlist' | 'cart' | 'order',
 };
 const ProductItem = (props: Props) => {
-  const { type, item, ...rest } = props;
+  const {type, item, ...rest} = props;
   if (!item || !item.id) {
     return null;
   }

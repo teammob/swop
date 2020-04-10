@@ -12,7 +12,11 @@ import {borderRadius, margin, padding} from 'src/components/config/spacing';
 class Search extends React.Component {
   render() {
     const {fields, theme, language} = this.props;
-    if (!fields || typeof fields !== 'object' || Object.keys(fields).length < 1) {
+    if (
+      !fields ||
+      typeof fields !== 'object' ||
+      Object.keys(fields).length < 1
+    ) {
       return null;
     }
     const title = fields.placeholder ? fields.placeholder : null;
@@ -67,7 +71,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   language: languageSelector(state),
 });
 

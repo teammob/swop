@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Platform, TouchableHighlight, View, StyleSheet, Text as NativeText, I18nManager } from 'react-native';
+import {
+  Platform,
+  TouchableHighlight,
+  View,
+  StyleSheet,
+  Text as NativeText,
+  I18nManager,
+} from 'react-native';
 
 import getIconType from '../helpers/getIconType';
-import { ViewPropTypes, withTheme } from '../config';
+import {ViewPropTypes, withTheme} from '../config';
 
 const Icon = props => {
   const {
@@ -55,18 +62,18 @@ const Icon = props => {
           disabled && styles.disabled,
           disabled && disabledStyle,
         ])}
-        {...onPress && { disabled }}
-        onPress={onPress}
-      >
+        {...onPress && {disabled}}
+        onPress={onPress}>
         <IconComponent
           testID="iconIcon"
           style={StyleSheet.flatten([
             {
               backgroundColor: 'transparent',
             },
-            isRotateRTL && I18nManager.isRTL && {
-              transform: [{ scaleX: -1 }],
-            },
+            isRotateRTL &&
+              I18nManager.isRTL && {
+                transform: [{scaleX: -1}],
+              },
             iconStyle && iconStyle,
           ])}
           size={size}
@@ -93,7 +100,7 @@ Icon.propTypes = {
   reverseColor: PropTypes.string,
   disabled: PropTypes.bool,
   disabledStyle: ViewPropTypes.style,
-  isRotateRTL: PropTypes.bool
+  isRotateRTL: PropTypes.bool,
 };
 
 Icon.defaultProps = {
@@ -119,7 +126,7 @@ const styles = StyleSheet.create({
       },
       default: {
         shadowColor: 'rgba(0,0,0, .4)',
-        shadowOffset: { height: 1, width: 1 },
+        shadowOffset: {height: 1, width: 1},
         shadowOpacity: 1,
         shadowRadius: 1,
       },
@@ -130,5 +137,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export { Icon };
+export {Icon};
 export default withTheme(Icon, 'Icon');

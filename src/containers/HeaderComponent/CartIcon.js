@@ -1,19 +1,19 @@
 // @flow
 import React from 'react';
 
-import { TouchableOpacity, Animated } from 'react-native';
+import {TouchableOpacity, Animated} from 'react-native';
 
-import { compose } from 'recompose';
-import { connect } from 'react-redux';
-import { withNavigation, NavigationScreenProps } from 'react-navigation';
+import {compose} from 'recompose';
+import {connect} from 'react-redux';
+import {withNavigation, NavigationScreenProps} from 'react-navigation';
 
-import { Badge, Icon } from 'src/components';
+import {Badge, Icon} from 'src/components';
 // import Icon from 'react-native-vector-icons/Feather';
 
-import { homeTabs } from 'src/config/navigator';
+import {homeTabs} from 'src/config/navigator';
 
-import { cartSizeSelector } from 'src/modules/cart/selectors';
-import { configsSelector } from 'src/modules/common/selectors';
+import {cartSizeSelector} from 'src/modules/cart/selectors';
+import {configsSelector} from 'src/modules/common/selectors';
 
 type Props = {
   value: number,
@@ -39,7 +39,7 @@ class CartIcon extends React.Component<Props> {
     }
   }
   animated = () => {
-    const { scale } = this.state;
+    const {scale} = this.state;
     const toValue = scale._value === 1 ? 1.5 : 1;
     Animated.timing(scale, {
       toValue: toValue,
@@ -50,7 +50,7 @@ class CartIcon extends React.Component<Props> {
     });
   };
   render() {
-    const { value, iconProps, navigation, configs } = this.props;
+    const {value, iconProps, navigation, configs} = this.props;
     const heightBadge = 16;
 
     const badgeStyle = {
@@ -63,14 +63,17 @@ class CartIcon extends React.Component<Props> {
       fontSize: 8,
     };
     if (!configs.get('toggleCheckout')) {
-      return null
+      return null;
     }
     return (
-      <TouchableOpacity onPress={() => navigation.navigate(homeTabs.cart)} style={{ flexDirection: 'row', alignItems: 'center', padding: 6}}>
-        <Animated.View style={{
-          transform: [{ scale: this.state.scale }],
-          zIndex: 9999
-        }}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate(homeTabs.cart)}
+        style={{flexDirection: 'row', alignItems: 'center', padding: 6}}>
+        <Animated.View
+          style={{
+            transform: [{scale: this.state.scale}],
+            zIndex: 9999,
+          }}>
           <Badge
             status="error"
             badgeStyle={badgeStyle}
@@ -80,7 +83,7 @@ class CartIcon extends React.Component<Props> {
         </Animated.View>
         <Icon name="shopping-bag" size={20} {...iconProps} />
       </TouchableOpacity>
-    )
+    );
   }
 }
 
@@ -90,12 +93,9 @@ CartIcon.defaultProps = {
   iconProps: {},
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   value: cartSizeSelector(state),
   configs: configsSelector(state),
 });
 
-export default compose(
-  withNavigation,
-  connect(mapStateToProps)
-)(CartIcon);
+export default compose(withNavigation, connect(mapStateToProps))(CartIcon);

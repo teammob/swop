@@ -12,7 +12,11 @@ import SocialIcon from 'src/containers/SocialIcon';
 import {TextHeader, CartIcon} from 'src/containers/HeaderComponent';
 
 import {authSelector} from 'src/modules/auth/selectors';
-import {wishListSelector, configsSelector, languageSelector} from 'src/modules/common/selectors';
+import {
+  wishListSelector,
+  configsSelector,
+  languageSelector,
+} from 'src/modules/common/selectors';
 
 import {grey5} from 'src/components/config/colors';
 import {margin} from 'src/components/config/spacing';
@@ -29,11 +33,11 @@ class MeScreen extends Component {
     };
   };
 
-  handleLinkUrl = (url) => {
+  handleLinkUrl = url => {
     Linking.openURL(url);
   };
 
-  goPageOther = (router) => {
+  goPageOther = router => {
     this.props.navigation.navigate(router);
   };
 
@@ -47,14 +51,14 @@ class MeScreen extends Component {
 
     return (
       <ThemedView isFullView>
-        <Header centerComponent={<TextHeader title={t('common:text_me_screen')}/>} rightComponent={<CartIcon/>}/>
+        <Header
+          centerComponent={<TextHeader title={t('common:text_me_screen')} />}
+          rightComponent={<CartIcon />}
+        />
         <ScrollView>
           <Container style={styles.viewContent}>
-            <HeaderMe/>
-            <InformationMe
-              isLogin={isLogin}
-              clickPage={this.goPageOther}
-            />
+            <HeaderMe />
+            <InformationMe isLogin={isLogin} clickPage={this.goPageOther} />
             <SettingMe
               isLogin={isLogin}
               clickPage={this.goPageOther}
@@ -98,7 +102,7 @@ class MeScreen extends Component {
                 onPress={() => this.handleLinkUrl(configs.get('twitter'))}
               />
             </View>
-            <Text h6 colorThird >
+            <Text h6 colorThird>
               {typeof configs.get('copyright') === 'string'
                 ? configs.get('copyright')
                 : configs.getIn(['copyright', language])}

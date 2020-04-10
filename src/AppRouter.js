@@ -50,7 +50,7 @@ class AppRouter extends React.Component {
   }
 
   componentDidMount() {
-    NetInfo.addEventListener(state => {
+    NetInfo.addEventListener((state) => {
       const {isCheck} = this.state;
       const {isConnected} = state;
       if (!isConnected) {
@@ -82,29 +82,34 @@ class AppRouter extends React.Component {
       i18n.changeLanguage(language);
     }
 
-    const themeColor = theme === 'light' ? merge(lightColors, {colors}) : darkColors;
+    const themeColor =
+      theme === 'light' ? merge(lightColors, {colors}) : darkColors;
     const barStyle = theme === 'light' ? 'dark-content' : 'light-content';
 
     return (
       <ThemeProvider theme={themeColor}>
-        <StatusBar translucent barStyle={barStyle} backgroundColor="transparent"/>
-        {!isConnected
-          ? <Unconnected
-            clickTry={this.checkInternet}
-          />
-          : <Router
+        <StatusBar
+          translucent
+          barStyle={barStyle}
+          backgroundColor="transparent"
+        />
+        {!isConnected ? (
+          <Unconnected clickTry={this.checkInternet} />
+        ) : (
+          <Router
             screenProps={{t, i18n, theme: themeColor}}
-            ref={navigatorRef => {
+            ref={(navigatorRef) => {
               NavigationService.setTopLevelNavigator(navigatorRef);
             }}
-          />}
-        <FlashMessage position="top"/>
+          />
+        )}
+        <FlashMessage position="top" />
       </ThemeProvider>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     language: languageSelector(state),
     theme: themeSelector(state),
@@ -112,7 +117,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default compose(
-  withTranslation(),
-  connect(mapStateToProps),
-)(AppRouter);
+export default compose(withTranslation(), connect(mapStateToProps))(AppRouter);

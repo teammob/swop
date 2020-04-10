@@ -17,7 +17,7 @@ const Tabbar = (props) => {
   const {
     configs,
     screenProps: {t, theme},
-    navigation
+    navigation,
   } = props;
   const data = [
     {
@@ -28,8 +28,15 @@ const Tabbar = (props) => {
     },
     {
       iconName: 'search',
-      name: t('common:text_shop'),
+      name: t('common:text_search'),
       router: homeTabs.shop,
+      isShow: true,
+    },
+    {
+      iconName: 'tag',
+      name: t('common:text_shop'),
+      nameData: 'text_search',
+      router: homeTabs.itemSwipe,
       isShow: true,
     },
     {
@@ -38,13 +45,6 @@ const Tabbar = (props) => {
       nameData: 'wishList',
       router: homeTabs.wish_list,
       isShow: configs.get('toggleWishlist'),
-    },
-    {
-      iconName: 'shopping-bag',
-      name: t('common:text_cart'),
-      nameData: 'cart',
-      router: homeTabs.cart,
-      isShow: configs.get('toggleCheckout'),
     },
     {
       iconName: 'user',
@@ -58,35 +58,47 @@ const Tabbar = (props) => {
   ];
 
   return (
-    <SafeAreaView forceInset={{bottom: 'always'}} style={[styles.container, theme.TabNavigator.tabStyle]}>
-      {data.map((tab, index) => tab.isShow ? (
-        <TouchableOpacity
-          key={index}
-          style={styles.item}
-          onPress={() => navigation.navigate(tab.router)}
-        >
-          <IconTabbar
-            name={tab.iconName}
-            color={navigation.state.index === index ? theme.colors.primary:grey5}
-            nameData={tab.nameData}
-            {...tab.iconProps}
-          />
-          <Text medium style={[
-            styles.text,
-            {
-              color: navigation.state.index === index ? theme.colors.primary:grey5
-            },
-          ]}>{tab.name}</Text>
-        </TouchableOpacity>
-      ) : null)}
+    <SafeAreaView
+      forceInset={{bottom: 'always'}}
+      style={[styles.container, theme.TabNavigator.tabStyle]}>
+      {data.map((tab, index) =>
+        tab.isShow ? (
+          <TouchableOpacity
+            key={index}
+            style={styles.item}
+            onPress={() => navigation.navigate(tab.router)}>
+            <IconTabbar
+              name={tab.iconName}
+              color={
+                navigation.state.index === index ? theme.colors.primary : grey5
+              }
+              nameData={tab.nameData}
+              {...tab.iconProps}
+            />
+            <Text
+              medium
+              style={[
+                styles.text,
+                {
+                  color:
+                    navigation.state.index === index
+                      ? theme.colors.primary
+                      : grey5,
+                },
+              ]}>
+              {tab.name}
+            </Text>
+          </TouchableOpacity>
+        ) : null,
+      )}
     </SafeAreaView>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    borderTopWidth: 1
+    borderTopWidth: 1,
   },
   item: {
     flex: 1,
@@ -97,13 +109,13 @@ const styles = StyleSheet.create({
     fontSize: sizes.h6 - 2,
     lineHeight: 15,
     marginTop: 5,
-  }
+  },
 });
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    configs: configsSelector(state)
-  }
+    configs: configsSelector(state),
+  };
 };
 
 export default connect(mapStateToProps)(Tabbar);
