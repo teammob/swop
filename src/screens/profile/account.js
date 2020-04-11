@@ -1,12 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
-import { Header, ListItem, ThemedView } from 'src/components';
+import {Header, ListItem, ThemedView} from 'src/components';
 import Container from 'src/containers/Container';
-import { TextHeader, IconHeader, CartIcon } from 'src/containers/HeaderComponent';
+import {TextHeader, IconHeader, CartIcon} from 'src/containers/HeaderComponent';
 
-import { profileStack } from 'src/config/navigator';
-import { signOut } from 'src/modules/auth/actions';
+import {profileStack} from 'src/config/navigator';
+import {signOut} from 'src/modules/auth/actions';
 
 class AccountScreen extends React.Component {
   static navigationOptions = {
@@ -21,7 +21,7 @@ class AccountScreen extends React.Component {
   render() {
     const {
       navigation,
-      screenProps: { t },
+      screenProps: {t},
     } = this.props;
     const titleProps = {
       medium: true,
@@ -71,4 +71,7 @@ const mapDispatchToProps = dispatch => ({
   signOut: () => dispatch(signOut()),
 });
 
-export default connect(null, mapDispatchToProps)(AccountScreen);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(AccountScreen);

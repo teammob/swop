@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import {getIn, Map} from 'immutable';
 import take from 'lodash/take';
@@ -17,34 +17,43 @@ import Container from 'src/containers/Container';
 import Heading from 'src/containers/Heading';
 import Products from '../Products';
 
-import { currencySelector, defaultCurrencySelector, languageSelector, daysBeforeNewProductSelector  } from 'src/modules/common/selectors';
-import { getProducts, topSellers } from 'src/modules/product/service';
-import { prepareProductItem } from 'src/utils/product';
-import { handleError } from 'src/utils/error';
+import {
+  currencySelector,
+  defaultCurrencySelector,
+  languageSelector,
+  daysBeforeNewProductSelector,
+} from 'src/modules/common/selectors';
+import {getProducts, topSellers} from 'src/modules/product/service';
+import {prepareProductItem} from 'src/utils/product';
+import {handleError} from 'src/utils/error';
 
 const initHeader = {
   style: {},
 };
 
-const getType = (fields) => {
+const getType = fields => {
   if (!fields) {
     return productListTypes.latest;
   }
-  const type = fields.product_type && fields.product_type.type
-    ? fields.product_type.type
-    : fields.type
+  const type =
+    fields.product_type && fields.product_type.type
+      ? fields.product_type.type
+      : fields.type
       ? fields.type
       : productListTypes.latest;
   return type;
 };
 
-const getInclude = (fields) => {
+const getInclude = fields => {
   if (!fields) {
     return [];
   }
-  const ids = fields.product_type && fields.product_type.type === productListTypes.custom && fields.product_type.ids
-    ? fields.product_type.ids
-    : '';
+  const ids =
+    fields.product_type &&
+    fields.product_type.type === productListTypes.custom &&
+    fields.product_type.ids
+      ? fields.product_type.ids
+      : '';
   return split(ids, ',');
 };
 
@@ -52,7 +61,8 @@ class ProductList extends Component {
   constructor(props, context) {
     super(props, context);
     const type = getType(props.fields);
-    const per_page = props.fields && props.fields.limit ? props.fields.limit : 4;
+    const per_page =
+      props.fields && props.fields.limit ? props.fields.limit : 4;
     const include = getInclude(props.fields);
 
     this.state = {
@@ -79,14 +89,14 @@ class ProductList extends Component {
           period: 'year',
         });
         if (topSellerProducts.length) {
-          results = topSellerProducts.map(({ product_id }) => product_id);
+          results = topSellerProducts.map(({product_id}) => product_id);
         }
       }
       this.setState(
         {
           include: results,
         },
-        this.fetchData
+        this.fetchData,
       );
     } catch (e) {
       this.fetchData();
@@ -94,9 +104,9 @@ class ProductList extends Component {
   };
 
   fetchData = () => {
-    const { per_page, include } = this.state;
+    const {per_page, include} = this.state;
 
-    const { language } = this.props;
+    const {language} = this.props;
 
     this.setState(
       {
@@ -121,7 +131,7 @@ class ProductList extends Component {
           });
           handleError(error);
         }
-      }
+      },
     );
 
     // if (type === productListTypes.best_sales) {
@@ -132,9 +142,12 @@ class ProductList extends Component {
   };
   componentDidUpdate(prevProps) {
     if (!isEqual(prevProps.fields, this.props.fields)) {
-      const per_page = this.props.fields && this.props.fields.limit ? this.props.fields.limit : 4;
+      const per_page =
+        this.props.fields && this.props.fields.limit
+          ? this.props.fields.limit
+          : 4;
       const type = getType(this.props.fields);
-      const include = getInclude(this.props.fields)
+      const include = getInclude(this.props.fields);
 
       this.setState(
         {
@@ -142,7 +155,7 @@ class ProductList extends Component {
           type,
           include,
         },
-        () => this.getFilter(type, per_page)
+        () => this.getFilter(type, per_page),
       );
     }
   }
@@ -152,17 +165,30 @@ class ProductList extends Component {
    * @returns {*}
    */
   prepareProduct = item => {
-    const { currency, defaultCurrency, days  } = this.props;
+    const {currency, defaultCurrency, days} = this.props;
     const mapItem = Map(item);
     const result = prepareProductItem(mapItem, currency, defaultCurrency, days);
     return result.toJS();
   };
 
   render() {
-    const { navigation, navigationType, headingElement, layout, fields, widthComponent, language, t } = this.props;
-    const { data, include } = this.state;
+    const {
+      navigation,
+      navigationType,
+      headingElement,
+      layout,
+      fields,
+      widthComponent,
+      language,
+      t,
+    } = this.props;
+    const {data, include} = this.state;
 
-    if (!fields || typeof fields !== 'object' || Object.keys(fields).length < 1) {
+    if (
+      !fields ||
+      typeof fields !== 'object' ||
+      Object.keys(fields).length < 1
+    ) {
       return null;
     }
 
@@ -175,28 +201,32 @@ class ProductList extends Component {
     return (
       <>
         {headingElement ||
-        (fields && fields.disable_heading && (
-          <Container disable={headerDisable}>
-            {headingElement ? (
-              headingElement
-            ) : (
-              <Heading
-                title={heading.text && heading.text[language] ? heading.text[language]:t('common:text_product')}
-                style={heading.style}
-                containerStyle={{ paddingTop: 0 }}
-                onPress={() =>
-                  navigation.navigate(mainStack.products, {
-                    name: heading.text[language],
-                    filterBy: Map({
-                      include: include,
-                    }),
-                  })
-                }
-                subTitle={t('common:text_show_all')}
-              />
-            )}
-          </Container>
-        ))}
+          (fields && fields.disable_heading && (
+            <Container disable={headerDisable}>
+              {headingElement ? (
+                headingElement
+              ) : (
+                <Heading
+                  title={
+                    heading.text && heading.text[language]
+                      ? heading.text[language]
+                      : t('common:text_product')
+                  }
+                  style={heading.style}
+                  containerStyle={{paddingTop: 0}}
+                  onPress={() =>
+                    navigation.navigate(mainStack.products, {
+                      name: heading.text[language],
+                      filterBy: Map({
+                        include: include,
+                      }),
+                    })
+                  }
+                  subTitle={t('common:text_show_all')}
+                />
+              )}
+            </Container>
+          ))}
         <Products
           data={listData}
           layout={layout}
@@ -224,5 +254,5 @@ const mapStateToProps = state => ({
 export default compose(
   withTranslation(),
   withNavigation,
-  connect(mapStateToProps)
+  connect(mapStateToProps),
 )(ProductList);

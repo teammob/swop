@@ -7,7 +7,7 @@ import Category from 'src/screens/shop/category';
 import WishList from 'src/screens/wishlist';
 
 import ProfileStack from './profile-stack';
-import CartStack from './cart-stack';
+// import CartStack from './cart-stack';
 import productSwiperScreen from '../screens/home/containers/Products/productSwiper';
 import Tabbar from 'src/containers/Tabbar';
 

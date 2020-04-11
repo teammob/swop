@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Header, ThemedView } from 'src/components';
+import {StyleSheet} from 'react-native';
+import {Header, ThemedView} from 'src/components';
 
-import { IconHeader, CartIcon, TextHeader } from 'src/containers/HeaderComponent';
+import {IconHeader, CartIcon, TextHeader} from 'src/containers/HeaderComponent';
 import ContainerPrivacy from './containers/ContainerPrivacy';
 
-import { margin } from 'src/components/config/spacing';
-import { lineHeights } from 'src/components/config/fonts';
+import {margin} from 'src/components/config/spacing';
+import {lineHeights} from 'src/components/config/fonts';
 
 export default class SettingScreen extends React.Component {
   static navigationOptions = {
@@ -14,7 +14,7 @@ export default class SettingScreen extends React.Component {
   };
   render() {
     const {
-      screenProps: { t },
+      screenProps: {t},
     } = this.props;
     return (
       <ThemedView isFullView>
