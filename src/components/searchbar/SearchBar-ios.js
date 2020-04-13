@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   TouchableOpacity,
   LayoutAnimation,
@@ -15,10 +15,10 @@ import Input from '../input/Input';
 import Icon from '../icons/Icon';
 import Text from '../text/Text';
 import ThemedView from '../themedview/ThemedView';
-import { renderNode, nodeType } from '../helpers';
-import { grey5 } from '../config/colors';
-import fonts, { sizes } from '../config/fonts';
-import { margin, padding, borderRadius } from '../config/spacing';
+import {renderNode, nodeType} from '../helpers';
+import {grey5} from '../config/colors';
+import fonts, {sizes} from '../config/fonts';
+import {margin, padding, borderRadius} from '../config/spacing';
 
 const PADDING_LEFT_CONTAINER = padding.large;
 const PADDING_RIGHT_CONTAINER = padding.large + 3;
@@ -38,7 +38,7 @@ const defaultClearIcon = {
 class SearchBar extends Component {
   constructor(props) {
     super(props);
-    const { value } = props;
+    const {value} = props;
 
     this.state = {
       hasFocus: false,
@@ -86,7 +86,7 @@ class SearchBar extends Component {
 
   onChangeText = text => {
     this.props.onChangeText(text);
-    this.setState({ isEmpty: text === '' });
+    this.setState({isEmpty: text === ''});
   };
 
   render() {
@@ -106,9 +106,9 @@ class SearchBar extends Component {
       searchIcon,
       ...attributes
     } = this.props;
-    const { hasFocus, isEmpty } = this.state;
+    const {hasFocus, isEmpty} = this.state;
 
-    const { style: loadingStyle, ...otherLoadingProps } = loadingProps;
+    const {style: loadingStyle, ...otherLoadingProps} = loadingProps;
 
     const {
       buttonStyle,
@@ -121,7 +121,8 @@ class SearchBar extends Component {
     } = cancelButtonProps;
 
     return (
-      <ThemedView style={StyleSheet.flatten([styles.container, containerStyle])}>
+      <ThemedView
+        style={StyleSheet.flatten([styles.container, containerStyle])}>
         <Input
           {...attributes}
           testID="searchInput"
@@ -137,18 +138,21 @@ class SearchBar extends Component {
           }}
           inputContainerStyle={StyleSheet.flatten([
             styles.inputContainer(theme),
-            hasFocus && { marginRight: this.state.cancelButtonWidth },
+            hasFocus && {marginRight: this.state.cancelButtonWidth},
             inputContainerStyle,
           ])}
           leftIcon={renderNode(Icon, searchIcon, defaultSearchIcon)}
-          leftIconContainerStyle={StyleSheet.flatten([styles.leftIconContainerStyle, leftIconContainerStyle])}
+          leftIconContainerStyle={StyleSheet.flatten([
+            styles.leftIconContainerStyle,
+            leftIconContainerStyle,
+          ])}
           placeholderTextColor={placeholderTextColor}
           rightIcon={
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               {showLoading && (
                 <ActivityIndicator
                   key="loading"
-                  style={StyleSheet.flatten([{ marginRight: 5 }, loadingStyle])}
+                  style={StyleSheet.flatten([{marginRight: 5}, loadingStyle])}
                   {...otherLoadingProps}
                 />
               )}
@@ -161,7 +165,10 @@ class SearchBar extends Component {
                 })}
             </View>
           }
-          rightIconContainerStyle={StyleSheet.flatten([styles.rightIconContainerStyle, rightIconContainerStyle])}
+          rightIconContainerStyle={StyleSheet.flatten([
+            styles.rightIconContainerStyle,
+            rightIconContainerStyle,
+          ])}
         />
 
         <View
@@ -172,24 +179,25 @@ class SearchBar extends Component {
               right: hasFocus ? 0 : -this.state.cancelButtonWidth,
             },
           ])}
-          onLayout={event => this.setState({ cancelButtonWidth: event.nativeEvent.layout.width })}
-        >
+          onLayout={event =>
+            this.setState({cancelButtonWidth: event.nativeEvent.layout.width})
+          }>
           <TouchableOpacity
             accessibilityRole="button"
             onPress={this.cancel}
             disabled={buttonDisabled}
-            {...otherCancelButtonProps}
-          >
+            {...otherCancelButtonProps}>
             <View style={[buttonStyle, buttonDisabled && buttonDisabledStyle]}>
               <Text
                 style={[
                   styles.buttonTextStyle,
-                  buttonColor && { color: buttonColor },
+                  buttonColor && {color: buttonColor},
                   buttonTextStyle,
-                  buttonDisabled && (buttonDisabledTextStyle || styles.buttonTextDisabled(theme)),
+                  buttonDisabled &&
+                    (buttonDisabledTextStyle ||
+                      styles.buttonTextDisabled(theme)),
                 ]}
-                h6
-              >
+                h6>
                 {cancelButtonTitle}
               </Text>
             </View>

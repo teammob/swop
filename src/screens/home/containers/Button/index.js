@@ -18,7 +18,11 @@ const initHeader = {
 class Button extends React.Component {
   render() {
     const {fields, language, t} = this.props;
-    if (!fields || typeof fields !== 'object' || Object.keys(fields).length < 1) {
+    if (
+      !fields ||
+      typeof fields !== 'object' ||
+      Object.keys(fields).length < 1
+    ) {
       return null;
     }
     const border = fields.border_color ? fields.border_color : black;
@@ -28,13 +32,15 @@ class Button extends React.Component {
     return (
       <Container disable={!fields.boxed ? 'all' : 'none'}>
         <ButtonCPN
-          title={title && title.text && title.text[language]
-            ? title.text[language]
-            : t('common:text_submit')}
+          title={
+            title && title.text && title.text[language]
+              ? title.text[language]
+              : t('common:text_submit')
+          }
           titleStyle={[title && title.style]}
           buttonStyle={{
             backgroundColor: bgColor,
-            borderColor: border
+            borderColor: border,
           }}
           onPress={() => action(fields.action)}
         />
