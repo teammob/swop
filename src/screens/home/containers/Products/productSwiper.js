@@ -39,13 +39,13 @@ class productSwiperScreen extends Component {
 
   renderCard = (card, index) => {
     return (
-      <ScrollView>
+      <View>
         <View style={styles.card}>
           <Text style={styles.text}>
             {card} - {index}
           </Text>
         </View>
-      </ScrollView>
+      </View>
     );
   };
 
@@ -62,6 +62,9 @@ class productSwiperScreen extends Component {
   swipeLeft = () => {
     this.swiper.swipeLeft();
   };
+  swipeRight = () => {
+    this.swiper.swipeRight();
+  };
 
   render() {
     const {
@@ -69,7 +72,7 @@ class productSwiperScreen extends Component {
       screenProps: {t},
     } = this.props;
     return (
-      <ThemedView style={StyleSheet.flatten([styles.containerTheme])}>
+      <ThemedView isFullView>
         <Header
           leftComponent={<IconHeader />}
           centerComponent={<TextHeader title={t('common:text_product')} />}
@@ -85,13 +88,13 @@ class productSwiperScreen extends Component {
             onSwipedRight={() => this.onSwiped('right')}
             onSwipedTop={() => this.onSwiped('top')}
             onSwipedBottom={() => this.onSwiped('bottom')}
-            onTapCard={this.swipeLeft}
+            onTapCard={this.swipeRight}
             cards={this.state.cards}
             cardIndex={this.state.cardIndex}
             cardVerticalMargin={40}
             renderCard={this.renderCard}
             onSwipedAll={this.onSwipedAllCards}
-            stackSize={3}
+            stackSize={5}
             stackSeparation={15}
             overlayLabels={{
               bottom: {
@@ -167,7 +170,7 @@ class productSwiperScreen extends Component {
             animateCardOpacity
             swipeBackCard>
             <Button
-              onPress={() => this.swiper.swipeBack()}
+              onPress={() => this.swiper.swipeRight()}
               title="Swipe Back"
             />
           </Swiper>
@@ -180,11 +183,9 @@ class productSwiperScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#999999',
+    backgroundColor: '#F5FCFF',
     justifyContent: 'center',
     alignItems: 'center',
-    //paddingVertical: '50%',
-    //paddingEnd: '50%',
   },
   card: {
     flex: 1,
@@ -193,12 +194,8 @@ const styles = StyleSheet.create({
     borderColor: '#E8E8E8',
     justifyContent: 'center',
     backgroundColor: 'white',
-    // width: '80%',
-    // height: '30%',
-    top: 10,
-    //left: 10,
-    paddingVertical: '50%',
-    paddingEnd: '50%',
+    paddingVertical: '80%',
+    paddingEnd: '80%',
   },
   text: {
     textAlign: 'center',
