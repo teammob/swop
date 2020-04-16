@@ -2,8 +2,8 @@ import axios from 'axios';
 import globalConfig from 'src/utils/global';
 
 import configApi from 'src/config/api';
-import demoConfig from "./demo";
-import { Platform } from 'react-native';
+import demoConfig from './demo';
+import {Platform} from 'react-native';
 
 const request = axios.create();
 
@@ -19,7 +19,7 @@ request.interceptors.request.use(
     if (checkJwt >= 0 && globalConfig.getToken()) {
       config.headers = {
         Authorization: `Bearer ${globalConfig.getToken()}`,
-      }
+      };
     } else {
       config.params = {
         consumer_key: configApi.CONSUMER_KEY,
@@ -34,8 +34,8 @@ request.interceptors.request.use(
 );
 
 request.interceptors.response.use(
-  function (response) {
-    let { data } = response;
+  function(response) {
+    let {data} = response;
 
     if (Platform.OS === 'android' && typeof data === 'string') {
       data = data.replace(/\r?\n/g, '').replace(/[\u0080-\uFFFF]/g, '');
@@ -44,7 +44,7 @@ request.interceptors.response.use(
 
     return data;
   },
-  function (error) {
+  function(error) {
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx

@@ -39,13 +39,13 @@ class productSwiperScreen extends Component {
 
   renderCard = (card, index) => {
     return (
-      <View>
-        <View style={styles.card}>
-          <Text style={styles.text}>
-            {card} - {index}
-          </Text>
-        </View>
+      //<View style={styles.container}>
+      <View style={styles.card}>
+        <Text style={styles.text}>
+          {card} - {index}
+        </Text>
       </View>
+      //</View>
     );
   };
 
@@ -91,7 +91,7 @@ class productSwiperScreen extends Component {
             onTapCard={this.swipeRight}
             cards={this.state.cards}
             cardIndex={this.state.cardIndex}
-            cardVerticalMargin={40}
+            cardVerticalMargin={15}
             renderCard={this.renderCard}
             onSwipedAll={this.onSwipedAllCards}
             stackSize={5}
@@ -182,20 +182,20 @@ class productSwiperScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     backgroundColor: '#F5FCFF',
     justifyContent: 'center',
     alignItems: 'center',
   },
   card: {
-    flex: 1,
+    // flex: 1,
     borderRadius: 5,
     borderWidth: 2,
     borderColor: '#E8E8E8',
     justifyContent: 'center',
     backgroundColor: 'white',
-    paddingVertical: '80%',
-    paddingEnd: '80%',
+    paddingVertical: '65%',
+    paddingEnd: '65%',
   },
   text: {
     textAlign: 'center',

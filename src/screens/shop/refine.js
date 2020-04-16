@@ -11,7 +11,12 @@ import ViewRefine from './containers/ViewRefine';
 import {mainStack} from 'src/config/navigator';
 
 import {sortBySelector, attributeSelector} from 'src/modules/product/selectors';
-import {sortByProduct, fetchProductAttributes, clearFilter, fetchProducts} from 'src/modules/product/actions';
+import {
+  sortByProduct,
+  fetchProductAttributes,
+  clearFilter,
+  fetchProducts,
+} from 'src/modules/product/actions';
 
 import {margin} from 'src/components/config/spacing';
 
@@ -83,7 +88,7 @@ class RefineScreen extends React.Component {
         title={item.get('title')}
         type="underline"
         small
-        rightIcon={<RadioIcon isSelect={isSelect}/>}
+        rightIcon={<RadioIcon isSelect={isSelect} />}
         containerStyle={styles.item}
         onPress={() => sortByProduct(item)}
       />
@@ -96,7 +101,7 @@ class RefineScreen extends React.Component {
    * @returns {*}
    */
   renderAttribute = item => {
-    const { navigation} = this.props;
+    const {navigation} = this.props;
 
     return (
       <ListItem
@@ -125,9 +130,9 @@ class RefineScreen extends React.Component {
 
   goFilterPrice = () => {
     const {navigation, fetchProducts} = this.props;
-    const data = navigation.getParam('data', [])
+    const data = navigation.getParam('data', []);
     fetchProducts(data);
-    navigation.navigate(mainStack.filter_price)
+    navigation.navigate(mainStack.filter_price);
   };
 
   render() {
@@ -158,8 +163,11 @@ class RefineScreen extends React.Component {
               type="underline"
               small
               chevron
-              onPress={() => navigation.navigate(mainStack.filter_category, {category})}
-            />) : null}
+              onPress={() =>
+                navigation.navigate(mainStack.filter_category, {category})
+              }
+            />
+          ) : null}
 
           <ListItem
             title={t('catalog:text_price_range')}
@@ -189,7 +197,7 @@ const mapDispatchToProps = {
   clearFilter,
   fetchProducts,
   sortByProduct,
-  fetchProductAttributes
+  fetchProductAttributes,
 };
 
 const mapStateToProps = state => {
@@ -202,4 +210,7 @@ const mapStateToProps = state => {
 RefineScreen.defaultProps = {
   data: [],
 };
-export default connect(mapStateToProps, mapDispatchToProps)(RefineScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(RefineScreen);

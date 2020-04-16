@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { withTheme } from '../config';
+import {withTheme} from '../config';
 
 import IOSSearchBar from './SearchBar-ios';
 import AndroidSearchBar from './SearchBar-android';
@@ -31,7 +31,8 @@ class SearchBar extends React.Component {
   };
 
   render() {
-    const Component = SEARCHBAR_COMPONENTS[this.props.platform] || DefaultSearchBar;
+    const Component =
+      SEARCHBAR_COMPONENTS[this.props.platform] || DefaultSearchBar;
 
     return (
       <Component
@@ -52,5 +53,5 @@ SearchBar.defaultProps = {
   platform: 'default',
 };
 
-export { SearchBar };
+export {SearchBar};
 export default withTheme(SearchBar, 'SearchBar');

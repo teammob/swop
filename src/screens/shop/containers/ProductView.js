@@ -1,17 +1,28 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { fromJS } from 'immutable';
+import {connect} from 'react-redux';
+import {fromJS} from 'immutable';
 
-import { View, StyleSheet, ActivityIndicator, FlatList, Dimensions } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  FlatList,
+  Dimensions,
+} from 'react-native';
 import Container from 'src/containers/Container';
 import ProductItem from 'src/containers/ProductItem';
 
-import { columnProductSelector, currencySelector, defaultCurrencySelector, daysBeforeNewProductSelector  } from 'src/modules/common/selectors';
-import { prepareProductItem } from 'src/utils/product';
+import {
+  columnProductSelector,
+  currencySelector,
+  defaultCurrencySelector,
+  daysBeforeNewProductSelector,
+} from 'src/modules/common/selectors';
+import {prepareProductItem} from 'src/utils/product';
 
-import { padding, margin } from 'src/components/config/spacing';
+import {padding, margin} from 'src/components/config/spacing';
 
-const { width } = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 const widthImage = (col = 1) => {
   const widthFlatList = width - 2 * padding.large;
@@ -34,10 +45,21 @@ class ProductView extends React.Component {
   };
 
   render() {
-    const { data, column, refreshing, handleLoadMore, handleRefresh, currency, defaultCurrency, days  } = this.props;
+    const {
+      data,
+      column,
+      refreshing,
+      handleLoadMore,
+      handleRefresh,
+      currency,
+      defaultCurrency,
+      days,
+    } = this.props;
     const wImage = widthImage(column);
     const hImage = heightImage(wImage);
-    const dataPrepare = data.map(item => prepareProductItem(item, currency, defaultCurrency, days ));
+    const dataPrepare = data.map(item =>
+      prepareProductItem(item, currency, defaultCurrency, days),
+    );
 
     return (
       <FlatList
@@ -48,7 +70,7 @@ class ProductView extends React.Component {
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         keyExtractor={item => `${item.id}`}
         data={dataPrepare.toJS()}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <Container disable={column > 1 ? 'all' : 'none'}>
             <ProductItem item={item} width={wImage} height={hImage} />
           </Container>

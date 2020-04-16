@@ -8,7 +8,12 @@ import pickBy from 'lodash/pickBy';
  */
 
 export const getProducts = query =>
-  request.get(`/wc/v3/products?${queryString.stringify(pickBy(query, item => item !== ""), { arrayFormat: 'comma' })}`);
+  request.get(
+    `/wc/v3/products?${queryString.stringify(
+      pickBy(query, item => item !== ''),
+      {arrayFormat: 'comma'},
+    )}`,
+  );
 
 /**
  * Fetch single product
@@ -31,44 +36,53 @@ export const getSingleBlog = (id, lang) =>
  * @param query
  * @returns {*}
  */
-export const topSellers = query => request.get(`/wc/v3/reports/top_sellers?${queryString.stringify(query)}`);
+export const topSellers = query =>
+  request.get(`/wc/v3/reports/top_sellers?${queryString.stringify(query)}`);
 
 /**
  *  Get attributes
  * @returns {*}
  */
-export const getAttributes = (lang) => request.get(`/wc/v3/products/attributes?lang=${lang}`);
+export const getAttributes = lang =>
+  request.get(`/wc/v3/products/attributes?lang=${lang}`);
 
 /**
  *  Get attribute terms
  * @returns {*}
  */
-export const getAttributeTerms = attribute_id => request.get(`/wc/v3/products/attributes/${attribute_id}/terms`);
+export const getAttributeTerms = attribute_id =>
+  request.get(`/wc/v3/products/attributes/${attribute_id}/terms`);
 
 /**
  *  Get product reviews
  * @returns {*}
  */
-export const getProductReviews = product_id => request.get(`/wc/v3/products/reviews?product=${product_id}`);
+export const getProductReviews = product_id =>
+  request.get(`/wc/v3/products/reviews?product=${product_id}`);
 
 /**
  *  Get rating product reviews
  * @returns {*}
  */
-export const getRatingProductReviews = product_id => request.get(`/rnlab-app-control/v1/rating-count?product_id=${product_id}`);
+export const getRatingProductReviews = product_id =>
+  request.get(`/rnlab-app-control/v1/rating-count?product_id=${product_id}`);
 
 /**
  *  Get rating product reviews
  * @returns {*}
  */
-export const addProductReviews = data => request.post(`/rnlab-app-control/v1/reviews`, data);
+export const addProductReviews = data =>
+  request.post(`/rnlab-app-control/v1/reviews`, data);
 
 /**
  *  Get product variations
  * @returns {*}
  */
 export const getVariations = (product_id, lang, cancelToken) =>
-  request.get(`/wc/v3/products/${product_id}/variations?lang=${lang}&per_page=100`, { cancelToken });
+  request.get(
+    `/wc/v3/products/${product_id}/variations?lang=${lang}&per_page=100`,
+    {cancelToken},
+  );
 
 /**
  *  Get product variations

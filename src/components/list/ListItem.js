@@ -1,9 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Platform, StyleSheet, Switch, TouchableHighlight, View } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Switch,
+  TouchableHighlight,
+  View,
+} from 'react-native';
 
-import { renderNode, nodeType } from '../helpers';
-import { ViewPropTypes, TextPropTypes, withTheme } from '../config';
+import {renderNode, nodeType} from '../helpers';
+import {ViewPropTypes, TextPropTypes, withTheme} from '../config';
 
 import Avatar from '../avatar/Avatar';
 import Badge from '../badge/Badge';
@@ -13,7 +19,7 @@ import Text from '../text/Text';
 import ButtonGroup from '../buttons/ButtonGroup';
 import Input from '../input/Input';
 
-import { padding, margin, borderRadius } from '../config/spacing';
+import {padding, margin, borderRadius} from '../config/spacing';
 
 const ANDROID_SECONDARY = 'rgba(0, 0, 0, 0.54)';
 
@@ -91,7 +97,9 @@ const ListItem = props => {
     topDivider,
     pad,
     linearGradientProps,
-    ViewComponent = linearGradientProps && global.Expo ? global.Expo.LinearGradient : View,
+    ViewComponent = linearGradientProps && global.Expo
+      ? global.Expo.LinearGradient
+      : View,
     theme,
     type,
     small,
@@ -104,7 +112,11 @@ const ListItem = props => {
   };
 
   return (
-    <Component {...attributes} onPress={onPress} onLongPress={onLongPress} disabled={disabled}>
+    <Component
+      {...attributes}
+      onPress={onPress}
+      onLongPress={onLongPress}
+      disabled={disabled}>
       <PadView
         Component={ViewComponent}
         {...linearGradientProps}
@@ -112,41 +124,60 @@ const ListItem = props => {
           styles.container(theme),
           type === 'underline' && styles.containerUnderline,
           small && styles.containerSmall,
-          (buttonGroup || switchProps) && { paddingVertical: 8 },
-          topDivider && { borderTopWidth: StyleSheet.hairlineWidth },
-          bottomDivider && { borderBottomWidth: StyleSheet.hairlineWidth },
+          (buttonGroup || switchProps) && {paddingVertical: 8},
+          topDivider && {borderTopWidth: StyleSheet.hairlineWidth},
+          bottomDivider && {borderBottomWidth: StyleSheet.hairlineWidth},
           containerStyle,
           disabled && disabledStyle,
         ])}
-        pad={pad}
-      >
+        pad={pad}>
         {renderNode(Text, leftElement)}
         {renderIcon(leftIcon)}
         {renderAvatar(leftAvatar)}
 
         {(typeof title !== 'undefined' || subtitle) && (
-          <View style={StyleSheet.flatten([styles.contentContainer, contentContainerStyle])}>
+          <View
+            style={StyleSheet.flatten([
+              styles.contentContainer,
+              contentContainerStyle,
+            ])}>
             {renderText(
               title,
-              { testID: 'listItemTitle', ...titleProps },
-              StyleSheet.flatten([styles.title, titleStyle])
+              {testID: 'listItemTitle', ...titleProps},
+              StyleSheet.flatten([styles.title, titleStyle]),
             )}
-            {renderText(subtitle, propsSubtitle, StyleSheet.flatten([styles.subtitle, subtitleStyle]))}
+            {renderText(
+              subtitle,
+              propsSubtitle,
+              StyleSheet.flatten([styles.subtitle, subtitleStyle]),
+            )}
           </View>
         )}
 
         {(!!rightTitle || !!rightSubtitle) && (
-          <View style={StyleSheet.flatten([styles.rightContentContainer, rightContentContainerStyle])}>
+          <View
+            style={StyleSheet.flatten([
+              styles.rightContentContainer,
+              rightContentContainerStyle,
+            ])}>
             {renderText(
               rightTitle,
               rightTitleProps,
-              StyleSheet.flatten([styles.title, styles.rightTitle, rightTitleStyle])
+              StyleSheet.flatten([
+                styles.title,
+                styles.rightTitle,
+                rightTitleStyle,
+              ]),
             )}
 
             {renderText(
               rightSubtitle,
               rightSubtitleProps,
-              StyleSheet.flatten([styles.subtitle, styles.rightSubtitle, rightSubtitleStyle])
+              StyleSheet.flatten([
+                styles.subtitle,
+                styles.rightSubtitle,
+                rightSubtitleStyle,
+              ]),
             )}
           </View>
         )}
@@ -154,16 +185,28 @@ const ListItem = props => {
         {input && (
           <Input
             {...input}
-            inputStyle={StyleSheet.flatten([styles.input, input && input.inputStyle])}
-            inputContainerStyle={StyleSheet.flatten([styles.inputContentContainer, input && input.inputContainerStyle])}
-            containerStyle={StyleSheet.flatten([styles.inputContainer, input && input.containerStyle])}
+            inputStyle={StyleSheet.flatten([
+              styles.input,
+              input && input.inputStyle,
+            ])}
+            inputContainerStyle={StyleSheet.flatten([
+              styles.inputContentContainer,
+              input && input.inputContainerStyle,
+            ])}
+            containerStyle={StyleSheet.flatten([
+              styles.inputContainer,
+              input && input.containerStyle,
+            ])}
           />
         )}
         {switchProps && <Switch {...switchProps} />}
         {checkBox && (
           <CheckBox
             {...checkBox}
-            containerStyle={StyleSheet.flatten([styles.checkboxContainer, checkBox && checkBox.containerStyle])}
+            containerStyle={StyleSheet.flatten([
+              styles.checkboxContainer,
+              checkBox && checkBox.containerStyle,
+            ])}
           />
         )}
         {badge && <Badge {...badge} />}
@@ -340,13 +383,17 @@ ListItem.defaultProps = {
   small: false,
 };
 
-const PadView = ({ children, pad, Component, ...props }) => {
+const PadView = ({children, pad, Component, ...props}) => {
   const childrens = React.Children.toArray(children);
-  const { length } = childrens;
+  const {length} = childrens;
   const Container = Component || View;
   return (
     <Container {...props}>
-      {React.Children.map(childrens, (child, index) => child && [child, index !== length - 1 && <View width={pad} />])}
+      {React.Children.map(
+        childrens,
+        (child, index) =>
+          child && [child, index !== length - 1 && <View width={pad} />],
+      )}
     </Container>
   );
 };
@@ -354,8 +401,12 @@ const PadView = ({ children, pad, Component, ...props }) => {
 PadView.propTypes = {
   children: PropTypes.node,
   pad: PropTypes.number,
-  Component: PropTypes.oneOfType([PropTypes.elementType, PropTypes.func, PropTypes.object]),
+  Component: PropTypes.oneOfType([
+    PropTypes.elementType,
+    PropTypes.func,
+    PropTypes.object,
+  ]),
 };
 
-export { ListItem };
+export {ListItem};
 export default withTheme(ListItem, 'ListItem');

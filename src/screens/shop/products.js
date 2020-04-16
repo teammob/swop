@@ -22,7 +22,10 @@ import CategoryList from './product/CategoryList';
 import {sortBySelector, filterBySelector} from 'src/modules/product/selectors';
 import {languageSelector} from 'src/modules/common/selectors';
 
-import {clearFilter, fetchProducts as clearData} from 'src/modules/product/actions';
+import {
+  clearFilter,
+  fetchProducts as clearData,
+} from 'src/modules/product/actions';
 import {getProducts} from 'src/modules/product/service';
 
 import {margin} from 'src/components/config/spacing';
@@ -38,7 +41,7 @@ const findCategory = (categoryId = '', lists = []) => {
   var category = null;
   var listFlat = lists;
 
-  while(loopWhile && listFlat.length > 0) {
+  while (loopWhile && listFlat.length > 0) {
     const categoryFind = find(listFlat, c => c.id == categoryId);
     if (categoryFind) {
       category = categoryFind;
@@ -214,12 +217,21 @@ class ProductsScreen extends React.Component {
         ) : data.length ? (
           <View style={styles.viewList}>
             <Container style={styles.viewRefineSwitch}>
-              <Refine onPress={() => navigation.navigate(mainStack.refine, {category: category, data})}/>
+              <Refine
+                onPress={() =>
+                  navigation.navigate(mainStack.refine, {
+                    category: category,
+                    data,
+                  })
+                }
+              />
               <SwitchProduct />
             </Container>
             <CategoryList
               onPress={this.handleCategoryPress}
-              data={category && category.categories ? category.categories: null}
+              data={
+                category && category.categories ? category.categories : null
+              }
             />
             <ProductView
               data={fromJS(data)}

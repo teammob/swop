@@ -33,7 +33,7 @@ class SearchScreen extends React.Component {
     };
   }
 
-  updateSearch = (value) => {
+  updateSearch = value => {
     const {filterBy, dispatch} = this.props;
     const newFilter = filterBy.set('search', value);
     dispatch(filterByProduct(newFilter));
@@ -50,7 +50,7 @@ class SearchScreen extends React.Component {
 
       fetch
         .get(`wc/v3/products?search=${search}`)
-        .then((data) => {
+        .then(data => {
           this.setState({
             data,
             loading: false,
@@ -74,7 +74,7 @@ class SearchScreen extends React.Component {
     });
   };
 
-  handleRecentKeyword = (search) => {
+  handleRecentKeyword = search => {
     const {filterBy, navigation} = this.props;
     const newFilterBy = filterBy.set('search', search);
     navigation.navigate(mainStack.products, {
@@ -83,7 +83,7 @@ class SearchScreen extends React.Component {
     });
   };
 
-  handleProductPage = (product) => {
+  handleProductPage = product => {
     const {navigation, currency, defaultCurrency} = this.props;
     navigation.navigate(mainStack.product, {
       // no need get days in prepareProductItem
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     filterBy: filterBySelector(state),
     currency: currencySelector(state),

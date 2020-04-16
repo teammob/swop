@@ -13,8 +13,7 @@ const CategoryList = ({onPress, data, theme}) => {
         horizontal={true}
         // pagingEnabled={true} // animates ScrollView to nearest multiple of it's own width
         showsHorizontalScrollIndicator={false}
-        style={styles.container}
-      >
+        style={styles.container}>
         {data.map((value, index) => (
           <TouchableOpacity
             key={value.id}
@@ -24,9 +23,13 @@ const CategoryList = ({onPress, data, theme}) => {
               index === 0 && styles.itemFirst,
               index === data.length - 1 && styles.itemLast,
               {borderColor: theme.CategoryProductList.borderColor},
-            ]}
-          >
-            <Text h6 style={[styles.textName, {color: theme.CategoryProductList.color}]}>
+            ]}>
+            <Text
+              h6
+              style={[
+                styles.textName,
+                {color: theme.CategoryProductList.color},
+              ]}>
               {value.name}
             </Text>
           </TouchableOpacity>
@@ -60,8 +63,7 @@ const styles = StyleSheet.create({
 });
 
 CategoryList.defaultProps = {
-  onPress: () => {
-  },
+  onPress: () => {},
   data: [],
 };
 
